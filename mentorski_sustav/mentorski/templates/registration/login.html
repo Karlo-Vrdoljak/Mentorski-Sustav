@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% bootstrap_messages %}
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card cardSetup shadow">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">Login</h1>
+          </div>
+        </div>
+        <div class="card-body">
+          <form method="post" id="form_login" class="form">
+            <div class="form-group">
+              {% csrf_token %}
+              {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

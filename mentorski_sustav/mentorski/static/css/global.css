@@ -1,0 +1,29 @@
+body {
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.cardSetup {
+    margin: 6em 6em 3em 3em;
+    width: 40vw; 
+    color: #c2c2c2;
+}
+.jumbotron {
+    padding: 0.5em!important;
+    margin-bottom: 0.5em!important;
+}
+.form-control {
+    border-radius: 1em!important;
+}
+input {
+    border-radius: 1em!important;
+    border: 1px solid!important;
+    outline: 0;
+    padding: 0em 0.5em;
+}
+.btn {
+    border-radius: 1em!important;
+}
+* {
+    user-select: none;
+}
