@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <title>{% block title %}Mentorski sustav{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/global.css' %}">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}?v1.5">
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">{% if request.user.is_anonymous == False %} {{ request.user }} {% endif %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">Features</a>
-        <a class="nav-item nav-link" href="#">Pricing</a>
-        <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        {% if request.user.is_anonymous %}
+        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+        {% endif %}
+        {% if request.user.is_anonymous == False %}
+        <a class="nav-item nav-link active" href="{% url 'logout' %}">Logout <span class="sr-only">(current)</span></a>
+        {% endif %}
+        {% if request.user.is_anonymous == False %}
+        {% if request.user.role == 'mentor' %}
+        <a class="nav-item nav-link" href="{% url 'courses' %}">Courses</a>
+        <a class="nav-item nav-link" href="#">Students</a>
+        {% endif %}
+        {% endif %}
       </div>
     </div>
   </nav>
 
   <main>
     {% block content %}
-    
+
     {% endblock content %}
   </main>
 </body>
+
 </html>

@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from mentorski.users.forms import CustomUserCreationForm, CustomUserChangeForm
-from mentorski.models import CustomUser
+from mentorski.models import CustomUser, Predmeti
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -15,3 +15,4 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['email', 'username','role', 'status']
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Predmeti)

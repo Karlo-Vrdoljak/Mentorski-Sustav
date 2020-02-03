@@ -27,3 +27,16 @@ input {
 * {
     user-select: none;
 }
+.cardSetupLarge {
+    margin: 6em 6em 3em 3em;
+    width: 90vw; 
+    color: #c2c2c2;
+}
+.tableWrapper {
+    position: relative;
+    height: 60vh;
+    overflow: auto;
+}
+.tableScroll {
+    display: block;
+}
