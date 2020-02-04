@@ -40,3 +40,9 @@ input {
 .tableScroll {
     display: block;
 }
+
+tr:hover {
+    background-color: #c2c2c2;
+    border-color: #c2c2c2;
+    cursor: pointer;
+}

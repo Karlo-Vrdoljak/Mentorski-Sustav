@@ -32,19 +32,23 @@
 								<th scope="col">Semestar Redovni</th>
 								<th scope="col">Semestar Izvanredni</th>
 								<th scope="col">Izborni</th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for course in courses %}
-							<tr>
-								<th>{{ course.ime }}</th>
-								<td>{{ course.kod }}</td>
-								<td>{{ course.program }}</td>
-								<td>{{ course.bodovi }}</td>
-								<td>{{ course.sem_redovni }}</td>
-								<td>{{ course.sem_izvanredni }}</td>
-								<td>{{ course.izborni }}</td>
-							</tr>
+							<form method="GET" action="{% url 'course details' id=course.id %}">
+								<tr>
+									<th>{{ course.ime }}</th>
+									<td>{{ course.kod }}</td>
+									<td>{{ course.program }}</td>
+									<td>{{ course.bodovi }}</td>
+									<td>{{ course.sem_redovni }}</td>
+									<td>{{ course.sem_izvanredni }}</td>
+									<td>{{ course.izborni }}</td>
+									<td><button type="submit" class="btn btn-info">expand</button></td>
+								</tr>
+							</form>
 							{% endfor %}
 						</tbody>
 					</table>
