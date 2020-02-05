@@ -16,12 +16,16 @@
 	<div class="row">
 		<div class="col">
 			<div class="card cardSetupLarge shadow">
-				<div class="jumbotron jumbotron-fluid">
+				<div class="jumbotron jumbotron-fluid jumbotronTableHeader">
 					<div class="container">
-						<h1 class="display-4">Courses</h1>
+						<h1 class="display-4 inline">Courses
+							<form class="form form-inline centerItem" method="GET" action="{% url 'new course' %}">
+								<button type="submit" class="btn btn-success">new</button>
+							</form>
+						</h1>
 					</div>
 				</div>
-				<div class="card-body tableWrapper tableScroll">
+				<div class="cardTableBody card-body tableWrapper tableScroll">
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
@@ -33,22 +37,30 @@
 								<th scope="col">Semestar Izvanredni</th>
 								<th scope="col">Izborni</th>
 								<th scope="col"></th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for course in courses %}
-							<form method="GET" action="{% url 'course details' id=course.id %}">
-								<tr>
-									<th>{{ course.ime }}</th>
-									<td>{{ course.kod }}</td>
-									<td>{{ course.program }}</td>
-									<td>{{ course.bodovi }}</td>
-									<td>{{ course.sem_redovni }}</td>
-									<td>{{ course.sem_izvanredni }}</td>
-									<td>{{ course.izborni }}</td>
-									<td><button type="submit" class="btn btn-info">expand</button></td>
-								</tr>
-							</form>
+							<tr>
+								<th>{{ course.ime }}</th>
+								<td>{{ course.kod }}</td>
+								<td>{{ course.program  }}</td>
+								<td>{{ course.bodovi }}</td>
+								<td>{{ course.sem_redovni }}</td>
+								<td>{{ course.sem_izvanredni }}</td>
+								<td>{{ course.izborni }}</td>
+								<td>
+									<form method="GET" action="{% url 'course details' id=course.id %}">
+										<button type="submit" class="btn btn-info">expand</button>
+									</form>
+								</td>
+								<td>
+									<form method="GET" action="{% url 'course delete' id=course.id %}">
+										<button type="submit" class="btn btn-danger">delete</button>
+									</form>
+								</td>
+							</tr>
 							{% endfor %}
 						</tbody>
 					</table>

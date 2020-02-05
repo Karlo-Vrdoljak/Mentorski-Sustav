@@ -46,3 +46,17 @@ tr:hover {
     border-color: #c2c2c2;
     cursor: pointer;
 }
+
+.cardTableBody {
+    padding: 0!important;
+}
+.jumbotronTableHeader {
+    margin-bottom: 0em!important;
+}
+
+.inline {
+    display: inline-flex;
+}
+.centerItem {
+    margin: 0.25em 0em 0em 0.4em;
+}
