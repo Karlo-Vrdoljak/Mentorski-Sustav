@@ -23,7 +23,7 @@
         <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
         {% endif %}
         {% if request.user.is_anonymous == False %}
-        <a class="nav-item nav-link active" href="{% url 'logout' %}">Logout <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" data-no-instant href="{% url 'logout' %}">Logout <span class="sr-only">(current)</span></a>
         {% endif %}
         {% if request.user.is_anonymous == False %}
         {% if request.user.role == 'mentor' %}
