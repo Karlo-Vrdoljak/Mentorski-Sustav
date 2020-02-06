@@ -57,6 +57,7 @@
 								</td>
 								<td>
 									<form method="POST" action="{% url 'course delete' id=course.id %}">
+										{% csrf_token %}
 										<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
 									</form>
 								</td>

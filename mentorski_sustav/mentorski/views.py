@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView,DetailView
 from mentorski.users.forms import CustomUserCreationForm, CustomUserChangeForm
 from mentorski.models import *
@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from mentorski_sustav.settings import IZVANREDNI_SEM, REDOVNI_SEM
 from mentorski.mentorskiService import MentorskiService
+from django.http import HttpResponseRedirect
 
 mentorskiService = MentorskiService()
 class RegisterView(CreateView):
@@ -19,7 +20,14 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'register.html'
 
-# GET mapping
+
+@login_required
+def reroute(request):
+    if request.user.role == 'mentor': 
+        return HttpResponseRedirect(reverse('courses', args=[]))
+    else:
+        return HttpResponseRedirect(reverse('upisni list', args=[request.user.id]))
+
 @login_required
 def courses(request):
     all_courses = Predmeti.objects.all()
@@ -117,6 +125,8 @@ def student_delete(request,id):
         return redirect('students')
 
 
+
+
 @login_required
 @require_http_methods(["GET","POST"])
 def student_upisni_list(request,id):
@@ -126,13 +136,14 @@ def student_upisni_list(request,id):
         upis__student, upis__predmet = mentorskiService.getUpisiPredmeti__Studenti()
         subject_semester = mentorskiService.groupPredmeti(upis__predmet,student)
 
+        upisi_student = mentorskiService.getUpisiStudent()
 
-        
-        # for item in new_list:
-        #     for sem in item:
-        #         print(sem.predmet.ime)
-        #         print(sem.predmet.sem_redovni)
-        #         print(sem.predmet.sem_izvanredni)
+        filteredCourses = [] 
+        for item in courses:
+            if item not in upisi_student:
+                filteredCourses.append(item) 
+        courses = filteredCourses
+
         return render(request, 'upisniList.html', 
         {
             'courses':courses, 
@@ -141,3 +152,40 @@ def student_upisni_list(request,id):
             'upis__predmet': upis__predmet,
             'subject_semester':subject_semester
         })
+    elif request.method == 'POST':
+        selected_predmet = Predmeti.objects.get(id=int(id))
+        upisi_model = Upisi()
+        upisi_model.student = CustomUser.objects.get(id=int(mentorskiService.getStudentId()))
+        upisi_model.predmet = Predmeti.objects.get(id = int(id))
+        upisi_model.status = 'enrolled'
+
+        upisi_model.save()
+        return HttpResponseRedirect(reverse('upisni list', args=[int(mentorskiService.getStudentId())]))
+
+
+@login_required
+@require_http_methods(["POST"])
+def student_upisni_list_remove(request,id):
+    if request.method == 'POST':
+        course = Predmeti.objects.get(id = int(id))
+        upisi_student = mentorskiService.getUpisi()
+        for item in upisi_student:
+            if item.predmet.id == id:
+                upis = Upisi.objects.get(id=int(item.id)).delete()
+                break
+        return HttpResponseRedirect(reverse('upisni list', args=[int(mentorskiService.getStudentId())]))
+        
+@login_required
+@require_http_methods(["POST"])
+def student_upisni_list_pass(request,id):
+    if request.method == 'POST':
+        course = Predmeti.objects.get(id = int(id))
+        upisi_student = mentorskiService.getUpisi()
+        for item in upisi_student:
+            if item.predmet.id == id:
+                upis = Upisi.objects.get(id=int(item.id))
+                upis.status = 'passed'
+                upis.save()
+                break
+        return HttpResponseRedirect(reverse('upisni list', args=[int(mentorskiService.getStudentId())]))
+        

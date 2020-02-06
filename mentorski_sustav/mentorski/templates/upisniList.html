@@ -40,7 +40,8 @@
 								<td>{{ course.bodovi }}</td>
 								<td>{% if course.izborni == 'da' %} <i class="fas fa-lg fa-check-circle" style="color: #4287f5;"> {% elif course.izborni == 'ne' %} <i class="fas fa-lg fa-times-circle" style="color: #f55742;"></i> {% endif %}</td>
 								<td>
-									<form method="GET" action="{% url 'course details' id=course.id %}">
+									<form method="POST" action="{% url 'upisni list' id=course.id %}">
+										{% csrf_token %}
 										<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-lg fa-arrow-alt-circle-right"></i></button>
 									</form>
 								</td>
@@ -69,22 +70,27 @@
 						{% for item in group %}
 						<div class="card-body">
 							{% if item.status == 'enrolled' %}
-							<form class="flexInline" action="" method="POST">
-								<h5 class="card-title"><button disabled type="submit" class="btn btn-info"><i class="fas fa-lg fa-clipboard-check"></i>{{ item.predmet.ime }}, Enrolled</button></h5>
-								<button type="submit" class="btn btn-danger"><i class="fas fa-lg fa-times-circle"></i>Remove</button>
-
-							</form>
+							<div class="flexInline">
+								<form action="{% url 'upisni list pass' id=item.predmet.id %}" method="POST">
+									{% csrf_token %}
+									<h5 class="card-title"><button type="submit" class="btn btn-info"><i class="fas fa-lg fa-clipboard-check"></i>{{ item.predmet.ime }}<span class="badge badge-pill badge-light ml-2">Enrolled</span></button></h5>
+								</form>
+								<form action="{% url 'upisni list remove' id=item.predmet.id %}" method="POST">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-danger btn-sm" style="height: 3em;"><i class="fas fa-lg fa-times-circle"></i><span class="badge badge-pill badge-light">Remove</span></button>
+								</form>
+							</div>
 							{% elif item.status == 'passed' %}
 							<form class="flexInline" action="" method="POST">
-								
-								<h5 class="card-title"><button disabled type="submit" class="btn btn-success"><i class="fas fa-lg fa-check-circle"></i> {{ item.predmet.ime }}, Passed</button></h5>
+
+								<h5 class="card-title"><button disabled type="submit" class="btn btn-success"><i class="fas fa-lg fa-check-circle"></i> {{ item.predmet.ime }}<span class="badge badge-pill badge-light ml-2">Passed</span></button></h5>
 								<div>
 								</div>
 							</form>
 							{% endif %}
 							<p class="card-text">ECTS &bull; {{ item.predmet.bodovi }}</p>
-							<hr>
 						</div>
+						<hr>
 						{% endfor %}
 					</div>
 					{% endfor %}
