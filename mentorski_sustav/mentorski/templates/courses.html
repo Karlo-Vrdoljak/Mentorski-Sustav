@@ -20,7 +20,7 @@
 					<div class="container">
 						<h1 class="display-4 inline">Courses
 							<form class="form form-inline centerItem" method="GET" action="{% url 'new course' %}">
-								<button type="submit" class="btn btn-success">new</button>
+								<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
 							</form>
 						</h1>
 					</div>
@@ -29,15 +29,15 @@
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
-								<th scope="col">Ime</th>
-								<th scope="col">Kod</th>
-								<th scope="col">Program</th>
-								<th scope="col">Bodovi</th>
-								<th scope="col">Semestar Redovni</th>
-								<th scope="col">Semestar Izvanredni</th>
-								<th scope="col">Izborni</th>
-								<th scope="col"></th>
-								<th scope="col"></th>
+								<th scope="col" style="vertical-align: middle;">Ime</th>
+								<th scope="col" style="vertical-align: middle;">Kod</th>
+								<th scope="col" style="vertical-align: middle;">Program</th>
+								<th scope="col" style="vertical-align: middle;">Bodovi</th>
+								<th scope="col" style="vertical-align: middle;">Semestar Redovni</th>
+								<th scope="col" style="vertical-align: middle;">Semestar Izvanredni</th>
+								<th scope="col" style="vertical-align: middle;">Izborni</th>
+								<th scope="col" style="vertical-align: middle;"></th>
+								<th scope="col" style="vertical-align: middle;"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,15 +49,15 @@
 								<td>{{ course.bodovi }}</td>
 								<td>{{ course.sem_redovni }}</td>
 								<td>{{ course.sem_izvanredni }}</td>
-								<td>{{ course.izborni }}</td>
+								<td>{% if course.izborni == 'da' %} <i class="fas fa-lg fa-check-circle" style="color: #4287f5;"> {% elif course.izborni == 'ne' %} <i class="fas fa-lg fa-times-circle" style="color: #f55742;"></i> {% endif %}</td>
 								<td>
 									<form method="GET" action="{% url 'course details' id=course.id %}">
-										<button type="submit" class="btn btn-info">expand</button>
+										<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button>
 									</form>
 								</td>
 								<td>
-									<form method="GET" action="{% url 'course delete' id=course.id %}">
-										<button type="submit" class="btn btn-danger">delete</button>
+									<form method="POST" action="{% url 'course delete' id=course.id %}">
+										<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
 									</form>
 								</td>
 							</tr>

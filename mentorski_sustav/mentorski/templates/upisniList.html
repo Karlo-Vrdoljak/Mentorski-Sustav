@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% bootstrap_messages %}
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-6">
+			<div class="card cardSetup shadow">
+				<div class="jumbotron jumbotron-fluid jumbotronTableHeader">
+					<div class="container">
+						<h1 class="display-4 inline">Courses</h1>
+					</div>
+				</div>
+				<div class="cardTableBody card-body tableWrapper tableScroll">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" style="vertical-align: middle;">Ime</th>
+								<th scope="col" style="vertical-align: middle;">Kod</th>
+								<th scope="col" style="vertical-align: middle;">Bodovi</th>
+								<th scope="col" style="vertical-align: middle;">Izborni</th>
+								<th scope="col" style="vertical-align: middle;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for course in courses %}
+							<tr>
+								<th>{{ course.ime }}</th>
+								<td>{{ course.kod }}</td>
+								<td>{{ course.bodovi }}</td>
+								<td>{% if course.izborni == 'da' %} <i class="fas fa-lg fa-check-circle" style="color: #4287f5;"> {% elif course.izborni == 'ne' %} <i class="fas fa-lg fa-times-circle" style="color: #f55742;"></i> {% endif %}</td>
+								<td>
+									<form method="GET" action="{% url 'course details' id=course.id %}">
+										<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-lg fa-arrow-alt-circle-right"></i></button>
+									</form>
+								</td>
+
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="card cardSetup shadow">
+				<div class="jumbotron jumbotron-fluid jumbotronTableHeader">
+					<div class="container">
+						<h1 class="display-4 flexTitle smallerFont">
+							<div>Enrollment form</div>
+							<div>{{student.email}}</div>
+						</h1>
+					</div>
+				</div>
+				<div class="cardTableBody card-body tableWrapper tableScroll">
+					{% for key, group in subject_semester %}
+					<div class="card">
+						<h5 class="card-header">{{ key }} semestar</h5>
+						{% for item in group %}
+						<div class="card-body">
+							{% if item.status == 'enrolled' %}
+							<form class="flexInline" action="" method="POST">
+								<h5 class="card-title"><button disabled type="submit" class="btn btn-info"><i class="fas fa-lg fa-clipboard-check"></i>{{ item.predmet.ime }}, Enrolled</button></h5>
+								<button type="submit" class="btn btn-danger"><i class="fas fa-lg fa-times-circle"></i>Remove</button>
+
+							</form>
+							{% elif item.status == 'passed' %}
+							<form class="flexInline" action="" method="POST">
+								
+								<h5 class="card-title"><button disabled type="submit" class="btn btn-success"><i class="fas fa-lg fa-check-circle"></i> {{ item.predmet.ime }}, Passed</button></h5>
+								<div>
+								</div>
+							</form>
+							{% endif %}
+							<p class="card-text">ECTS &bull; {{ item.predmet.bodovi }}</p>
+							<hr>
+						</div>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

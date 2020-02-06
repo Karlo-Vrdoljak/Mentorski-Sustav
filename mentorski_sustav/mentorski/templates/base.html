@@ -5,9 +5,10 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <title>{% block title %}Mentorski sustav{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/global.css' %}?v1.622">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}?v1.8392">
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <script src="https://kit.fontawesome.com/24c5cf8e94.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -27,7 +28,7 @@
         {% if request.user.is_anonymous == False %}
         {% if request.user.role == 'mentor' %}
         <a class="nav-item nav-link" href="{% url 'courses' %}">Courses</a>
-        <a class="nav-item nav-link" href="#">Students</a>
+        <a class="nav-item nav-link" href="{% url 'students' %}">Students</a>
         {% endif %}
         {% endif %}
       </div>
@@ -39,6 +40,8 @@
 
     {% endblock content %}
   </main>
+  <script src="{% static 'js/InstantClick.js' %}" data-no-instant></script>
+  <script data-no-instant>InstantClick.init();</script>
 </body>
 
 </html>

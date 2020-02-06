@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% bootstrap_messages %}
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<div class="card cardSetupLarge shadow">
+				<div class="jumbotron jumbotron-fluid jumbotronTableHeader">
+					<div class="container">
+						<h1 class="display-4 inline">{{ students_title }}</h1>
+					</div>
+				</div>
+				<div class="cardTableBody card-body tableWrapper tableScroll">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" style="vertical-align: middle;">Username</th>
+								<th scope="col" style="vertical-align: middle;">Email</th>
+								<th scope="col" style="vertical-align: middle;">Role</th>
+								<th scope="col" style="vertical-align: middle;">Status</th>
+								<th scope="col" style="vertical-align: middle; width: 3em"></th>
+								<th scope="col" style="vertical-align: middle; width: 3em"></th>
+								<th scope="col" style="vertical-align: middle; width: 3em"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student in students %}
+							<tr>
+								<th>{{ student.username }}</th>
+								<td>{{ student.email }}</td>
+								<td>{{ student.role  }}</td>
+                                <td>{{ student.status }}</td>
+                                <td>
+									<form method="GET" action="{% url 'upisni list' id=student.id %}">
+										<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-file-alt"></i></button>
+                                    </form>
+                                </td>
+								<td>
+									<form method="GET" action="{% url 'student details' id=student.id %}">
+										<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-user-edit"></i></button>
+                                    </form>
+                                </td>
+								<td>
+									<form method="POST" action="{% url 'student delete' id=student.id %}">
+										<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+									</form>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -60,3 +60,27 @@ tr:hover {
 .centerItem {
     margin: 0.25em 0em 0em 0.4em;
 }
+.centerContent {
+    vertical-align: middle!important;
+}
+
+.smallerFont {
+    font-size: 2rem!important;
+}
+
+.flexTitle {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.flexInline {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.fa,.fas {
+    padding: 0em 0.5em 0em 0em;
+}
+td{
+    text-align: center;
+}

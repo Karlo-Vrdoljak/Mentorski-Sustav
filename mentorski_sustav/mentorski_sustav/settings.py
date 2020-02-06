@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+REDOVNI_SEM = 6
+IZVANREDNI_SEM = 8
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'mentorski.CustomUser' # custom user
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/mentorski/students/'
 LOGOUT_REDIRECT_URL = '/'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
