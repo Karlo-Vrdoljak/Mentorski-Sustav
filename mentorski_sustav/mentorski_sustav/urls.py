@@ -15,12 +15,15 @@ Including another URLconf
 """
 # config/urls.py
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic.base import TemplateView
+from mentorski.views import reroute
 # from mentorski.
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='login.html'), name='login'),
+    # path('', TemplateView.as_view(template_name='login.html'), name='login'),
     path('mentorski/', include('mentorski.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    re_path(r'^.*$', reroute,name='landing'),
+
 
 ]

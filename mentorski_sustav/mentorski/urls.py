@@ -5,7 +5,6 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
-    # path('mentorski/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('reroute/', reroute, name='reroute'),
     path('courses/',courses,name='courses'),
