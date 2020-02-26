@@ -9,6 +9,24 @@ class MentorskiService(object):
         return self.student.id
     def getStudent(self):
         return self.student
+
+    def getAllSubjectsHigherThanEcts(self,value):
+
+        upisiStudent, _ = self.getUpisiPredmeti__Studenti()
+
+        reportList = []
+        for item in upisiStudent:
+            predmet = {
+                'ime': item.predmet.ime,
+                'predmet': item.predmet.kod,
+                'bodovi': item.predmet.bodovi,
+            }
+            if predmet not in reportList and predmet['bodovi'] >= value:
+                reportList.append(predmet)
+                
+        # [print(item['ime'], item['predmet'], item['bodovi']) for item in reportList]
+        return reportList
+
     def getAllSubjects(self):
         all_courses = Predmeti.objects.all()
         courses = []

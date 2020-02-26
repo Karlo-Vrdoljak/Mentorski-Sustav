@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('reroute/', reroute, name='reroute'),
     path('courses/',courses,name='courses'),
+    path('report/',report,name='report'),
     path('course/new/',new_course, name="new course"),
     path('course/detail/<int:id>/',courseDetail, name="course details"),
     path('course/delete/<int:id>/',courseDelete, name="course delete"),

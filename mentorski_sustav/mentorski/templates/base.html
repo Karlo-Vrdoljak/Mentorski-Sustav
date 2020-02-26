@@ -29,6 +29,7 @@
         {% if request.user.role == 'mentor' %}
         <a class="nav-item nav-link" href="{% url 'courses' %}">Courses</a>
         <a class="nav-item nav-link" href="{% url 'students' %}">Students</a>
+        <a class="nav-item nav-link" href="{% url 'report' %}">Report</a>
         {% endif %}
         {% endif %}
       </div>

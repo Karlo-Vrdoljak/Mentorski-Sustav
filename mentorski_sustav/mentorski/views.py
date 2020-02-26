@@ -188,4 +188,11 @@ def student_upisni_list_pass(request,id):
                 upis.save()
                 break
         return HttpResponseRedirect(reverse('upisni list', args=[int(mentorskiService.getStudentId())]))
-        
+
+@login_required
+@require_http_methods(["GET"])     
+def report(request):
+    courses = mentorskiService.getAllSubjectsHigherThanEcts(6)
+    if len(courses) > 0:
+        return render(request, 'reportEcts.html', { 'courses':courses })
+
